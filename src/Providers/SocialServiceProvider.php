@@ -1,0 +1,44 @@
+<?php
+
+namespace Sashagm\Social\Providers;
+
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+
+
+class SocialServiceProvider extends ServiceProvider
+{
+
+
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     */
+
+
+     public function boot()
+     {
+
+        $this->loadRoutesFrom(__DIR__.'/../routes/social.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+
+        $this->publishes([
+            __DIR__.'/../config/socials.php' => config_path('socials.php'),
+        ]);
+
+
+
+     }
+}
+
+

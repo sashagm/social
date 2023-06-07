@@ -1,0 +1,38 @@
+{
+    "name": "sashagm/social",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "sashagm",
+            "email": "example@gmail.com",
+            "homepage": "https://github.com/sashagm"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Sashagm\\Social\\": "src"
+
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sashagm\\Social\\Providers\\SocialServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
+    }
+}
