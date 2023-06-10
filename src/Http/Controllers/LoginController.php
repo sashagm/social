@@ -13,19 +13,21 @@ class LoginController extends Controller
 {
     public function redirectToProvider($provider)
     {
-   
-        return Socialite::driver($provider)->redirect();
+        $this->checkSocialsIsActive();
 
+        return Socialite::driver($provider)->redirect();
     }
 
 
     public function handleProviderCallback($provider)
     {
+        $this->checkSocialsIsActive();
+
         $socialUser = Socialite::driver($provider)->user();
-    
+
         $user = User::where('email', $socialUser->getEmail())->first();
-    
-        if (! $user) {
+
+        if (!$user) {
             $user = User::create([
                 'name' => $socialUser->getName() ?? $socialUser->getNickname(),
                 'email' => $socialUser->getEmail(),
@@ -35,16 +37,16 @@ class LoginController extends Controller
                 'provider_id' => $socialUser->getId(),
             ]);
         }
-    
+
         if ($user->provider != $provider) {
             abort(403, "Ошибка! Используйте другую учётную запись для авторизации!");
         }
-    
+
         Auth::login($user);
-    
+
         return redirect('/');
     }
-    
+
 
 
     public function logout()
@@ -52,9 +54,13 @@ class LoginController extends Controller
 
         Auth::logout();
         return redirect('/');
-
     }
 
 
-
+    private function checkSocialsIsActive()
+    {
+        if (!config('socials.isActive')) {
+            abort(403, "Авторизация через социальные сети отключена!");
+        }
+    }
 }
