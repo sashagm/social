@@ -13,17 +13,21 @@ return new class extends Migration
     {
 
         if (Schema::hasTable(config('socials.user_table'))) {
-            
-           
-                Schema::table(config('socials.user_table'), function (Blueprint $table) {
-                    $table->string('provider')->nullable();
-                    $table->string('provider_id')->nullable();
+
+
+            Schema::table(config('socials.user_table'), function (Blueprint $table) {
+                $table->string('provider')->nullable();
+                $table->string('provider_id')->nullable();
+            });
+
+            $userAvatarField = config('socials.user_avatar');
+
+            if (!Schema::hasColumn(config('socials.user_table'), $userAvatarField)) {
+                Schema::table(config('socials.user_table'), function (Blueprint $table) use ($userAvatarField) {
+                    $table->text($userAvatarField)->nullable();
                 });
-                      
-
-
+            }
         }
- 
     }
 
     /**
@@ -36,7 +40,14 @@ return new class extends Migration
         Schema::table(config('socials.user_table'), function (Blueprint $table) {
             $table->dropColumn('provider');
             $table->dropColumn('provider_id');
-
         });
+
+        $userAvatarField = config('socials.user_avatar');
+
+        if (Schema::hasColumn(config('socials.user_table'), $userAvatarField)) {
+            Schema::table(config('socials.user_table'), function (Blueprint $table) use ($userAvatarField) {
+                $table->dropColumn($userAvatarField);
+            });
+        }
     }
 };

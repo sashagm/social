@@ -2,8 +2,12 @@
 
 return [
     
-    'admin_prefix' => 'admin',
+    'admin_prefix' => '', 
     'user_table' => 'users',
+    'user_avatar' => "img",   
+
+
+
 
 
 ];

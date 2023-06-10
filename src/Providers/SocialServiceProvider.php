@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory;
 
 
 class SocialServiceProvider extends ServiceProvider
@@ -38,7 +39,14 @@ class SocialServiceProvider extends ServiceProvider
 
 
 
-     }
+
+        
+    }
+
+
+
+
+     
 }
 
 
