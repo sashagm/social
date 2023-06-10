@@ -22,16 +22,12 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $socialUser = Socialite::driver($provider)->user();
-
+    
         $user = User::where('email', $socialUser->getEmail())->first();
-
-        if ($provider != $user->provider) {
-            abort(403, "Ошибка! Используйте другую учётную запись для авторизации!");
-        }
     
         if (! $user) {
             $user = User::create([
-                'name' => $socialUser->getName(),
+                'name' => $socialUser->getName() ?? $socialUser->getNickname(),
                 'email' => $socialUser->getEmail(),
                 'password' => bcrypt(123456),
                 config('socials.user_avatar') => $socialUser->getAvatar(),
@@ -40,10 +36,15 @@ class LoginController extends Controller
             ]);
         }
     
+        if ($user->provider != $provider) {
+            abort(403, "Ошибка! Используйте другую учётную запись для авторизации!");
+        }
+    
         Auth::login($user);
     
         return redirect('/');
     }
+    
 
 
     public function logout()

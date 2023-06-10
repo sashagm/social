@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-
         if (Schema::hasTable(config('socials.user_table'))) {
-
-
             Schema::table(config('socials.user_table'), function (Blueprint $table) {
-                $table->string('provider')->nullable();
-                $table->string('provider_id')->nullable();
+                $table->string('provider')->nullable()->after(config('socials.user_table_after'));
+                $table->string('provider_id')->nullable()->after('provider');
             });
-
+    
             $userAvatarField = config('socials.user_avatar');
-
+    
             if (!Schema::hasColumn(config('socials.user_table'), $userAvatarField)) {
                 Schema::table(config('socials.user_table'), function (Blueprint $table) use ($userAvatarField) {
-                    $table->text($userAvatarField)->nullable();
+                    $table->text($userAvatarField)->nullable()->after('provider_id');
                 });
             }
         }
