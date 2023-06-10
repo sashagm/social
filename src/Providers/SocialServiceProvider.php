@@ -35,12 +35,12 @@ class SocialServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/socials.php' => config_path('socials.php'),
-        ]);
+        ], 'social-auth');
 
 
 
 
-        
+
     }
 
 
