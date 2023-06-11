@@ -44,6 +44,9 @@ class LoginController extends Controller
 
         $this->isAccess($socialUser->getEmail());
 
+        $user->updated_at = \Carbon\Carbon::now();
+        $user->save();
+
         Auth::login($user);
 
         return redirect(config('socials.redirect.auth'));
@@ -53,7 +56,6 @@ class LoginController extends Controller
 
     public function logout()
     {
-
         Auth::logout();
         return redirect(config('socials.redirect.logout'));
     }
