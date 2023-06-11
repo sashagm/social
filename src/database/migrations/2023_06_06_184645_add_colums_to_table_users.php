@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable(config('socials.user_table'))) {
-            Schema::table(config('socials.user_table'), function (Blueprint $table) {
-                $table->string('provider')->nullable()->after(config('socials.user_table_after'));
+        if (Schema::hasTable(config('socials.user.table'))) {
+            Schema::table(config('socials.user.table'), function (Blueprint $table) {
+                $table->string('provider')->nullable()->after(config('socials.user.table_after'));
                 $table->string('provider_id')->nullable()->after('provider');
             });
     
-            $userAvatarField = config('socials.user_avatar');
+            $userAvatarField = config('socials.user.avatar');
     
-            if (!Schema::hasColumn(config('socials.user_table'), $userAvatarField)) {
-                Schema::table(config('socials.user_table'), function (Blueprint $table) use ($userAvatarField) {
+            if (!Schema::hasColumn(config('socials.user.table'), $userAvatarField)) {
+                Schema::table(config('socials.user.table'), function (Blueprint $table) use ($userAvatarField) {
                     $table->text($userAvatarField)->nullable()->after('provider_id');
                 });
             }
@@ -34,15 +34,15 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table(config('socials.user_table'), function (Blueprint $table) {
+        Schema::table(config('socials.user.table'), function (Blueprint $table) {
             $table->dropColumn('provider');
             $table->dropColumn('provider_id');
         });
 
-        $userAvatarField = config('socials.user_avatar');
+        $userAvatarField = config('socials.user.avatar');
 
-        if (Schema::hasColumn(config('socials.user_table'), $userAvatarField)) {
-            Schema::table(config('socials.user_table'), function (Blueprint $table) use ($userAvatarField) {
+        if (Schema::hasColumn(config('socials.user.table'), $userAvatarField)) {
+            Schema::table(config('socials.user.table'), function (Blueprint $table) use ($userAvatarField) {
                 $table->dropColumn($userAvatarField);
             });
         }
