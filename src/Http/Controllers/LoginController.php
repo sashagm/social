@@ -170,7 +170,18 @@ class LoginController extends Controller
                 break;
         }
 
-        $length = config('socials.genPass.length');
+        $minLength = config('socials.genPass.min');
+        $maxLength = config('socials.genPass.max');
+        $stableLength = config('socials.genPass.stable_length');
+
+
+        if ($stableLength) {
+            $length = config('socials.genPass.length');
+        } else {
+            $length = rand($minLength, $maxLength);
+        }
+
+
         $string = '';
         for ($i = 0; $i < $length; $i++) {
             $string .= $characters[rand(0, strlen($characters) - 1)];
