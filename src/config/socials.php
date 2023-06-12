@@ -36,6 +36,12 @@ return [
         'address'               => '123 Main Street',
         */
     ], 
+
+    'access_admin'              => [
+        /*
+        1,
+        */
+    ],
     
 
 ];

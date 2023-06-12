@@ -13,20 +13,18 @@ class LoginController extends Controller
 {
     public function redirectToProvider($provider)
     {
-        $this->checkSocialsIsActive();
-
         return Socialite::driver($provider)->redirect();
     }
 
 
     public function handleProviderCallback($provider)
     {
-        $this->checkSocialsIsActive();
 
         $socialUser = Socialite::driver($provider)->user();
 
         $user = User::where('email', $socialUser->getEmail())->first();
 
+        $this->checkSocialsIsActive($user);
 
         $userData = [
             'name' => $socialUser->getName() ?? $socialUser->getNickname(),
@@ -42,7 +40,6 @@ class LoginController extends Controller
         foreach ($customFields as $field => $value) {
             $userData[$field] = $value;
         }
-
 
         if (!$user) {
             $user = User::create($userData);
@@ -69,10 +66,16 @@ class LoginController extends Controller
     }
 
 
-    private function checkSocialsIsActive()
+    private function checkSocialsIsActive($user = null)
     {
-        if (!config('socials.isActive')) {
-            abort(403, "Авторизация через социальные сети отключена Администрацией!");
+        $access = config('socials.access_admin');
+
+        if ($user && in_array($user->id, $access)) {
+            return true; 
+        } else {
+            if (!config('socials.isActive')) {
+                abort(403, "Авторизация через социальные сети отключена Администрацией!");
+            }
         }
     }
 
@@ -172,4 +175,8 @@ class LoginController extends Controller
                 break;
         }
     }
+
+
+
+    
 }
