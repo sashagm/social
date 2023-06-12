@@ -95,12 +95,33 @@ class LoginController extends Controller
         $secret = config('socials.genPass.secret');
 
         switch ($method) {
+
             case 'bcrypt':
                 $pass = bcrypt($this->generateString($filter));
                 break;
+
             case 'md5':
                 $pass = md5($this->generateString($filter) . $secret);
                 break;
+
+            case 'password_hash':
+                $pass = password_hash($this->generateString($filter), PASSWORD_DEFAULT);
+                break;
+
+            case 'sha1':
+                $pass = sha1($this->generateString($filter));
+                break;
+
+            case 'sha256':
+                $pass = hash('sha256', $this->generateString($filter));
+                break;
+
+            case 'base64':
+                $pass = base64_encode($this->generateString($filter));
+                break;
+
+
+
             default:
                 $pass = bcrypt($this->generateString($filter));
                 break;
