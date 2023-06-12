@@ -27,20 +27,28 @@ class LoginController extends Controller
 
         $user = User::where('email', $socialUser->getEmail())->first();
 
-        if (!$user) {
-            $user = User::create([
-                'name' => $socialUser->getName() ?? $socialUser->getNickname(),
-                'email' => $socialUser->getEmail(),
-                config('socials.user.pass_colum') => $this->generatePass(),
-                config('socials.user.avatar') => $socialUser->getAvatar(),
-                'provider' => $provider,
-                'provider_id' => $socialUser->getId(),
-            ]);
+
+        $userData = [
+            'name' => $socialUser->getName() ?? $socialUser->getNickname(),
+            'email' => $socialUser->getEmail(),
+            config('socials.user.pass_colum') => $this->generatePass(),
+            config('socials.user.avatar') => $socialUser->getAvatar(),
+            'provider' => $provider,
+            'provider_id' => $socialUser->getId(),
+        ];
+        
+        $customFields = config('socials.custom_fields');
+        
+        foreach ($customFields as $field => $value) {
+            $userData[$field] = $value;
         }
 
-        if ($user->provider != $provider) {
-            abort(403, "Используйте другую учётную запись для авторизации!");
+
+        if (!$user) {
+            $user = User::create($userData);
         }
+
+        $this->checkProvider($user, $provider);
 
         $this->isAccess($socialUser->getEmail());
 
@@ -72,20 +80,20 @@ class LoginController extends Controller
     private function isAccess($email)
     {
         $user = User::where('email', $email)->first();
-    
+
         if ($user && $user->{config('socials.user.access_colum')} == config('socials.user.access_value')) {
             abort(403, 'Ваш аккаунт заблокирован!');
         }
     }
 
 
-    
+
     private function generatePass()
     {
         $method = config('socials.genPass.method');
         $filter = config('socials.genPass.filter');
         $secret = config('socials.genPass.secret');
-    
+
         switch ($method) {
             case 'bcrypt':
                 $pass = bcrypt($this->generateString($filter));
@@ -97,10 +105,10 @@ class LoginController extends Controller
                 $pass = bcrypt($this->generateString($filter));
                 break;
         }
-    
+
         return $pass;
     }
-    
+
     private function generateString($filter)
     {
         switch ($filter) {
@@ -117,7 +125,7 @@ class LoginController extends Controller
                 $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                 break;
         }
-    
+
         $length = config('socials.genPass.length');
         $string = '';
         for ($i = 0; $i < $length; $i++) {
@@ -126,5 +134,21 @@ class LoginController extends Controller
         return $string;
     }
 
+    private function checkProvider($user, $provider)
+    {
+        $guard = config('socials.isProvider');
 
+        switch ($guard) {
+            case true:
+                if ($user->provider == $provider) {
+                    return true;
+                } else {
+                    abort(403, "Используйте другую учётную запись для авторизации!");
+                }
+                break;
+            case false:
+                return true;
+                break;
+        }
+    }
 }
