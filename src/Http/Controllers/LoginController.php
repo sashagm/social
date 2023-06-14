@@ -22,13 +22,13 @@ class LoginController extends Controller
 
         $socialUser = Socialite::driver($provider)->user();
 
-        $user = User::where('email', $socialUser->getEmail())->first();
+        $user = User::where(config('socials.user.email_colum'), $socialUser->getEmail())->first();
 
         $this->checkSocialsIsActive($user);
 
         $userData = [
-            'name' => $socialUser->getName() ?? $socialUser->getNickname(),
-            'email' => $socialUser->getEmail(),
+            config('socials.user.name_colum') => $socialUser->getName() ?? $socialUser->getNickname(),
+            config('socials.user.email_colum') => $socialUser->getEmail(),
             config('socials.user.pass_colum') => $this->generatePass(),
             config('socials.user.avatar') => $socialUser->getAvatar(),
             'provider' => $provider,
