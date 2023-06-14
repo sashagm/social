@@ -135,58 +135,68 @@ class LoginController extends Controller
 
     private function generateString($filter)
     {
-        switch ($filter) {
+        
+        if(config('socials.genPass.default_gen')) {
 
-            case 'string':
-                $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                break;
+            return config('socials.genPass.default_pass');
 
-            case 'number':
-                $characters = '0123456789';
-                break;
+        } else
+        {
+            switch ($filter) {
 
-            case 'hard':
-                $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                break;
-
-            case 'hard-unique':
-                $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
-                break;
-
-            case 'rus-string':
-                $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
-                break;
-
-            case 'rus-hard':
-                $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789';
-                break;
-
-            case 'rus-unique':
-                $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
-                break;
-
-            default:
-                $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                break;
-        }
-
-        $minLength = config('socials.genPass.min');
-        $maxLength = config('socials.genPass.max');
-        $stableLength = config('socials.genPass.stable_length');
-
-
-        if ($stableLength) {
-            $length = config('socials.genPass.length');
-        } else {
-            $length = rand($minLength, $maxLength);
-        }
-
-
-        $string = '';
-        for ($i = 0; $i < $length; $i++) {
-            $string .= $characters[rand(0, strlen($characters) - 1)];
-        }
-        return $string;
+                case 'string':
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    break;
+    
+                case 'number':
+                    $characters = '0123456789';
+                    break;
+    
+                case 'hard':
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    break;
+    
+                case 'hard-unique':
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
+                    break;
+    
+                case 'rus-string':
+                    $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+                    break;
+    
+                case 'rus-hard':
+                    $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789';
+                    break;
+    
+                case 'rus-unique':
+                    $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
+                    break;
+    
+                default:
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    break;
+            }
+    
+            $minLength = config('socials.genPass.min');
+            $maxLength = config('socials.genPass.max');
+            $stableLength = config('socials.genPass.stable_length');
+    
+    
+            if ($stableLength) {
+                $length = config('socials.genPass.length');
+            } else {
+                $length = rand($minLength, $maxLength);
+            }
+    
+    
+            $string = '';
+            for ($i = 0; $i < $length; $i++) {
+                $string .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            return $string;
+        }        
+        
+ 
     }
 
     private function checkProvider($user, $provider)
