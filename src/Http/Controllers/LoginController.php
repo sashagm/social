@@ -34,15 +34,18 @@ class LoginController extends Controller
             'provider' => $provider,
             'provider_id' => $socialUser->getId(),
         ];
-        
+
         $customFields = config('socials.custom_fields');
-        
+
         foreach ($customFields as $field => $value) {
             $userData[$field] = $value;
         }
 
+        $new = false;
+
         if (!$user) {
             $user = User::create($userData);
+            $new = true;
         }
 
         $this->checkProvider($user, $provider);
@@ -54,7 +57,21 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect(config('socials.redirect.auth'));
+        if($new) {
+
+            return redirect()
+                    ->route(config('socials.redirect.auth'))
+                    ->with('success', trans('social-auth::socials.register')); 
+        
+        } else {
+
+            return redirect()
+                    ->route(config('socials.redirect.auth'))
+                    ->with('success', trans('social-auth::socials.login')); 
+
+        }
+
+       
     }
 
 
@@ -62,7 +79,9 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect(config('socials.redirect.logout'));
+
+        return redirect()->route(config('socials.redirect.logout'))->with('success', trans('social-auth::socials.logout')); 
+
     }
 
 
@@ -71,10 +90,10 @@ class LoginController extends Controller
         $access = config('socials.access_admin');
 
         if ($user && in_array($user->id, $access)) {
-            return true; 
+            return true;
         } else {
             if (!config('socials.isActive')) {
-                abort(403, "Авторизация через социальные сети отключена Администрацией!");
+                abort(403, trans('social-auth::socials.offline') );
             }
         }
     }
@@ -85,7 +104,7 @@ class LoginController extends Controller
         $user = User::where('email', $email)->first();
 
         if ($user && $user->{config('socials.user.access_colum')} == config('socials.user.access_value')) {
-            abort(403, 'Ваш аккаунт заблокирован!');
+            abort(403,  trans('social-auth::socials.ban') );
         }
     }
 
@@ -135,68 +154,65 @@ class LoginController extends Controller
 
     private function generateString($filter)
     {
-        
-        if(config('socials.genPass.default_gen')) {
+
+        if (config('socials.genPass.default_gen')) {
 
             return config('socials.genPass.default_pass');
+        } else {
 
-        } else
-        {
             switch ($filter) {
 
                 case 'string':
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                     break;
-    
+
                 case 'number':
                     $characters = '0123456789';
                     break;
-    
+
                 case 'hard':
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                     break;
-    
+
                 case 'hard-unique':
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
                     break;
-    
+
                 case 'rus-string':
                     $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
                     break;
-    
+
                 case 'rus-hard':
                     $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789';
                     break;
-    
+
                 case 'rus-unique':
                     $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
                     break;
-    
+
                 default:
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                     break;
             }
-    
+
             $minLength = config('socials.genPass.min');
             $maxLength = config('socials.genPass.max');
             $stableLength = config('socials.genPass.stable_length');
-    
-    
+
+
             if ($stableLength) {
                 $length = config('socials.genPass.length');
             } else {
                 $length = rand($minLength, $maxLength);
             }
-    
-    
+
+
             $string = '';
             for ($i = 0; $i < $length; $i++) {
                 $string .= $characters[rand(0, strlen($characters) - 1)];
             }
             return $string;
-        }        
-        
- 
+        }
     }
 
     private function checkProvider($user, $provider)
@@ -208,7 +224,7 @@ class LoginController extends Controller
                 if ($user->provider == $provider) {
                     return true;
                 } else {
-                    abort(403, "Используйте другую учётную запись для авторизации!");
+                    abort(403, trans('social-auth::socials.provider'));
                 }
                 break;
             case false:
@@ -216,8 +232,4 @@ class LoginController extends Controller
                 break;
         }
     }
-
-
-
-    
 }

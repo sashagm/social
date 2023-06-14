@@ -31,10 +31,14 @@ class SocialServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../routes/social.php');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'social-auth');
 
 
         $this->publishes([
             __DIR__.'/../config/socials.php' => config_path('socials.php'),
+        ], 'social-auth');
+        $this->publishes([
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/socials'),
         ], 'social-auth');
 
 
