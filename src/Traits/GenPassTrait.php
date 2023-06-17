@@ -58,6 +58,14 @@ trait GenPassTrait
                 $pass = base64_encode($this->generateString($filter));
                 break;
 
+            case 'crc32':
+                $pass = hash("crc32", $this->generateString($filter));
+                break;
+
+            case 'whirlpool':
+                $pass = hash("whirlpool", $this->generateString($filter));
+                break;                
+
 
             default:
                 $pass = bcrypt($this->generateString($filter));
