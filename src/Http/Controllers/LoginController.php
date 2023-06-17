@@ -8,11 +8,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Sashagm\Social\Traits\GenPassTrait;
 use Laravel\Socialite\Facades\Socialite;
+use Sashagm\Social\Traits\FunctionTrait;
 use Sashagm\Social\Traits\GuardTrait;
 
 class LoginController extends Controller
 {
-    use GenPassTrait, GuardTrait;
+    use GenPassTrait, GuardTrait, FunctionTrait;
 
 
     public function redirectToProvider($provider)
@@ -47,6 +48,8 @@ class LoginController extends Controller
 
         $new = false;
 
+        $this->feedback('before');
+
         if (!$user) {
             $user = User::create($userData);
             $new = true;
@@ -55,6 +58,8 @@ class LoginController extends Controller
         $this->checkProvider($user, $provider);
 
         $this->isAccess($socialUser->getEmail());
+
+        $this->feedback('after');
 
         Auth::login($user);
 

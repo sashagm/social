@@ -50,6 +50,17 @@ return [
         1,
         */
     ],
+
+    'feedback'                  => [
+
+        [
+            'class' => 'App\Services',
+            'method' => 'one',
+            'params' => []
+        ],
+
+
+    ],
     
 
 ];
