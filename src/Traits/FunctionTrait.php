@@ -17,9 +17,15 @@ trait FunctionTrait
             case 'before':
                 $feedback = config('socials.feedback_before');
                 break;
+
             case 'after':
                 $feedback = config('socials.feedback_after');
                 break;
+                
+            case 'register':
+                    $feedback = config('socials.feedback_register');
+                    break;
+
             default:
                 throw new Exception('Invalid feedback method.');
         }
@@ -33,6 +39,6 @@ trait FunctionTrait
     }
 
 
-    
+
 
 }

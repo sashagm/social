@@ -53,6 +53,7 @@ class LoginController extends Controller
         if (!$user) {
             $user = User::create($userData);
             $new = true;
+            $this->feedback('register');
         }
 
         $this->checkProvider($user, $provider);
