@@ -43,10 +43,20 @@ trait GenPassTrait
                 $pass = hash('sha256', $this->generateString($filter));
                 break;
 
+            case 'sha512':
+                $pass = hash('sha512', $this->generateString($filter));
+                break;
+
+            case 'pbkdf2':
+                $password = $this->generateString($filter);
+                $iterations = 1000;
+                $salt = random_bytes(16);
+                $pass = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
+                break;
+
             case 'base64':
                 $pass = base64_encode($this->generateString($filter));
                 break;
-
 
 
             default:

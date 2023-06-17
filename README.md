@@ -183,6 +183,8 @@
 - `password_hash`
 - `sha1`
 - `sha256`
+- `sha512`
+- `pbkdf2`
 - `base64`
 
 
