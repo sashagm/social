@@ -51,16 +51,40 @@ return [
         */
     ],
 
-    'feedback'                  => [
+    'feedback_before'                  => [
 
-        [
-            'class' => 'App\Services',
-            'method' => 'one',
-            'params' => []
-        ],
+        /* [
+             'class' => 'App\Services\Testing',
+             'method' => 'one',
+             'params' => []
+         ],
+ 
+         [
+             'class' => 'App\Services\Testing',
+             'method' => 'who',
+             'params' => ['test']
+         ],
+         
+         */
+     ],  
+     
+     
+     'feedback_after'                  => [
 
-
-    ],
+        /* [
+             'class' => 'App\Services\Testing',
+             'method' => 'one',
+             'params' => []
+         ],
+ 
+         [
+             'class' => 'App\Services\Testing',
+             'method' => 'who',
+             'params' => ['test']
+         ],
+         
+         */
+     ],
     
 
 ];
