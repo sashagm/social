@@ -36,7 +36,7 @@
 Для установки пакета необходимо выполнить команды:
 
 - composer require sashagm/social
-- php artisan vendor:publish --tag=social-auth --provider=Sashagm\Social\Providers\SocialServiceProvider
+- php artisan socials:install
 
 
 #### Использование
