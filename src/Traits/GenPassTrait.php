@@ -24,12 +24,142 @@ trait GenPassTrait
                 break;
 
             case 'md5':
-                if (config('socials.genPass.viewReg')){
+                if (config('socials.genPass.viewReg')) {
                     $pass = strtoupper(md5($this->generateString($filter) . $secret));
                 } else {
                     $pass = md5($this->generateString($filter) . $secret);
                 }
                 break;
+
+            case 'md2':
+                $pass = hash("md2", $this->generateString($filter));
+                break;
+
+            case 'md4':
+                $pass = hash("md4", $this->generateString($filter));
+                break;
+
+            case 'sha224':
+                $pass = hash("sha224", $this->generateString($filter));
+                break;
+
+            case 'sha384':
+                $pass = hash("sha384", $this->generateString($filter));
+                break;
+
+            case 'sha512/224':
+                $pass = hash("sha512/224", $this->generateString($filter));
+                break;
+
+            case 'sha512/256':
+                $pass = hash("sha512/256", $this->generateString($filter));
+                break;
+
+            case 'sha3-224':
+                $pass = hash("sha3-224", $this->generateString($filter));
+                break;
+
+            case 'sha3-256':
+                $pass = hash("sha3-256", $this->generateString($filter));
+                break;
+
+            case 'sha3-384':
+                $pass = hash("sha3-384", $this->generateString($filter));
+                break;
+
+            case 'sha3-512':
+                $pass = hash("sha3-512", $this->generateString($filter));
+                break;
+
+            case 'ripemd128':
+                $pass = hash("ripemd128", $this->generateString($filter));
+                break;
+
+            case 'ripemd160':
+                $pass = hash("ripemd160", $this->generateString($filter));
+                break;
+
+            case 'ripemd256':
+                $pass = hash("ripemd256", $this->generateString($filter));
+                break;
+
+            case 'ripemd320':
+                $pass = hash("ripemd320", $this->generateString($filter));
+                break;
+
+            case 'snefru':
+                $pass = hash("snefru", $this->generateString($filter));
+                break;
+
+            case 'snefru256':
+                $pass = hash("snefru256", $this->generateString($filter));
+                break;
+
+            case 'tiger128,3':
+                $pass = hash("tiger128,3", $this->generateString($filter));
+                break;
+
+            case 'tiger160,3':
+                $pass = hash("tiger160,3", $this->generateString($filter));
+                break;
+
+            case 'tiger192,3':
+                $pass = hash("tiger192,3", $this->generateString($filter));
+                break;
+
+            case 'tiger128,4':
+                $pass = hash("tiger128,4", $this->generateString($filter));
+                break;
+
+            case 'tiger160,4':
+                $pass = hash("tiger160,4", $this->generateString($filter));
+                break;
+
+            case 'tiger192,4':
+                $pass = hash("tiger192,4", $this->generateString($filter));
+                break;
+
+            case 'gost':
+                $pass = hash("gost", $this->generateString($filter));
+                break;
+
+            case 'gost-crypto':
+                $pass = hash("gost-crypto", $this->generateString($filter));
+                break;
+
+
+            case 'adler32':
+                $pass = hash("adler32", $this->generateString($filter));
+                break;
+
+            case 'crc32b':
+                $pass = hash("crc32b", $this->generateString($filter));
+                break;
+
+            case 'crc32c':
+                $pass = hash("crc32c", $this->generateString($filter));
+                break;
+
+            case 'fnv132':
+                $pass = hash("fnv132", $this->generateString($filter));
+                break;
+
+            case 'fnv1a32':
+                $pass = hash("fnv1a32", $this->generateString($filter));
+                break;
+
+            case 'fnv164':
+                $pass = hash("fnv164", $this->generateString($filter));
+                break;
+
+            case 'fnv1a64':
+                $pass = hash("fnv1a64", $this->generateString($filter));
+                break;
+
+            case 'joaat':
+                $pass = hash("joaat", $this->generateString($filter));
+                break;
+
 
             case 'password_hash':
                 $pass = password_hash($this->generateString($filter), PASSWORD_DEFAULT);
@@ -64,7 +194,7 @@ trait GenPassTrait
 
             case 'whirlpool':
                 $pass = hash("whirlpool", $this->generateString($filter));
-                break;                
+                break;
 
 
             default:
@@ -137,7 +267,4 @@ trait GenPassTrait
             return $string;
         }
     }
-
-
-
 }
