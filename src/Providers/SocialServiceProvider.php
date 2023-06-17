@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
+use Sashagm\Social\Console\Commands\CreateCommand;
 
 
 class SocialServiceProvider extends ServiceProvider
@@ -41,7 +42,11 @@ class SocialServiceProvider extends ServiceProvider
             __DIR__.'/../resources/lang' => resource_path('lang/vendor/socials'),
         ], 'social-auth');
 
-
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CreateCommand::class,
+            ]);
+        }
 
 
 

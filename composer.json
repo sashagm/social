@@ -1,6 +1,6 @@
 {
     "name": "sashagm/social",
-    "description": "description",
+    "description": "Авторизация через социальные сети с помощью пакета для Laravel",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
