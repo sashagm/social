@@ -179,44 +179,18 @@
 Доступные следующие методы шифрования пароля:
 
 - `bcrypt`
-- `md2`
-- `md4`
-- `md5`
+- `md2` `md4` `md5`
 - `password_hash`
-- `sha1`
-- `sha224`
-- `sha256`
-- `sha384`
-- `sha512`
-- `sha512/224`
-- `sha512/256`
-- `sha3-224`
-- `sha3-256`
-- `sha3-384`
-- `sha3-512`
-- `ripemd128`
-- `ripemd160`
-- `ripemd256`
-- `ripemd320`
+- `sha1` `sha224` `sha256` `sha384` `sha512` `sha512/224` `sha512/256`
+- `sha3-224` `sha3-256` `sha3-384` `sha3-512`
+- `ripemd128` `ripemd160` `ripemd256` `ripemd320`
 - `whirlpool`
-- `tiger128,3`
-- `tiger160,3`
-- `tiger192,3`
-- `tiger128,4`
-- `tiger160,4`
-- `tiger192,4`
-- `snefru`
-- `snefru256`
-- `gost`
-- `gost-crypto`
+- `tiger128,3` `tiger160,3` `tiger192,3` `tiger128,4` `tiger160,4` `tiger192,4`
+- `snefru` `snefru256`
+- `gost` `gost-crypto`
 - `adler32`
-- `crc32`
-- `crc32b`
-- `crc32c`
-- `fnv132`
-- `fnv1a32`
-- `fnv164`
-- `fnv1a64`
+- `crc32` `crc32b` `crc32c`
+- `fnv132` `fnv1a32` `fnv164` `fnv1a64`
 - `joaat`
 - `pbkdf2`
 - `base64`
