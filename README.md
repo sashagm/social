@@ -127,7 +127,22 @@
          */
      ],
 
+     'feedback_register'                  => [
 
+        /* [
+             'class' => 'App\Services\Testing',
+             'method' => 'one',
+             'params' => []
+         ],
+ 
+         [
+             'class' => 'App\Services\Testing',
+             'method' => 'who',
+             'params' => ['test']
+         ],
+         
+         */
+     ], 
 
 ```
 
