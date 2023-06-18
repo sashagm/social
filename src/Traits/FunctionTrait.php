@@ -39,6 +39,27 @@ trait FunctionTrait
     }
 
 
+    private function cast_fields($socialUser, $provider)
+    {
+
+        $userData = [
+            config('socials.user.name_colum') => $socialUser->getName() ?? $socialUser->getNickname(),
+            config('socials.user.email_colum') => $socialUser->getEmail(),
+            config('socials.user.pass_colum') => $this->generatePass(),
+            config('socials.user.avatar') => $socialUser->getAvatar(),
+            'provider' => $provider,
+            'provider_id' => $socialUser->getId(),
+        ];
+
+        $customFields = config('socials.custom_fields');
+
+        foreach ($customFields as $field => $value) {
+            $userData[$field] = $value;
+        }
+
+        return $userData;
+
+    }
 
 
 }

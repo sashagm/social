@@ -31,20 +31,7 @@ class LoginController extends Controller
 
         $this->checkSocialsIsActive($user);
 
-        $userData = [
-            config('socials.user.name_colum') => $socialUser->getName() ?? $socialUser->getNickname(),
-            config('socials.user.email_colum') => $socialUser->getEmail(),
-            config('socials.user.pass_colum') => $this->generatePass(),
-            config('socials.user.avatar') => $socialUser->getAvatar(),
-            'provider' => $provider,
-            'provider_id' => $socialUser->getId(),
-        ];
-
-        $customFields = config('socials.custom_fields');
-
-        foreach ($customFields as $field => $value) {
-            $userData[$field] = $value;
-        }
+        $userData = $this->cast_fields($socialUser, $provider);
 
         $new = false;
 
@@ -67,16 +54,16 @@ class LoginController extends Controller
         if ($new) {
 
             return redirect()
-                ->route(config('socials.redirect.auth'))
-                ->with('success', trans('social-auth::socials.register'));
+                    ->route(config('socials.redirect.auth'))
+                    ->with('success', trans('social-auth::socials.register'));
         } else {
 
             $user->updated_at = \Carbon\Carbon::now();
             $user->save();
 
             return redirect()
-                ->route(config('socials.redirect.auth'))
-                ->with('success', trans('social-auth::socials.login'));
+                    ->route(config('socials.redirect.auth'))
+                    ->with('success', trans('social-auth::socials.login'));
         }
     }
 
@@ -86,7 +73,9 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route(config('socials.redirect.logout'))->with('success', trans('social-auth::socials.logout'));
+        return redirect()
+                ->route(config('socials.redirect.logout'))
+                ->with('success', trans('social-auth::socials.logout'));
     }
 
 

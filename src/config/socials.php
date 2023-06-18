@@ -38,6 +38,21 @@ return [
 
     ], 
 
+    'routes'                    => [
+        'auth_login'            => [
+                                    '/login/{provider}', // url на вызов провайдера
+                                    'social-auth'        // route name 
+        ],
+        'auth_login_callback'   => [
+                                    '/login/{provider}/callback', // url на вызов коллбэк
+                                    'social-callback'             // route name
+        ],
+        'social_logout'         => [
+                                    '/logout/social',           // url на вызов выход с аккаунта
+                                    'social-logout'             // route name
+        ]
+    ],
+
     'custom_fields'             => [
         /*
         'phone'                 => '+1234567890',
