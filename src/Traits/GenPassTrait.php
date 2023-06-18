@@ -243,6 +243,19 @@ trait GenPassTrait
                     $characters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ0123456789!@#$%^&*()_-+=[]{}|:;<>,.?/~';
                     break;
 
+                case 'custom-string':
+                    $characters = config('socials.genPass.custom_string');
+                    break;
+
+                case 'custom-hard':
+                    $characters = config('socials.genPass.custom_hard');
+                    break;
+
+                case 'custom-unique':
+                    $characters = config('socials.genPass.custom_unique');
+                    break;
+
+
                 default:
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                     break;
