@@ -15,6 +15,8 @@ return new class extends Migration
             Schema::table(config('socials.user.table'), function (Blueprint $table) {
                 $table->string('provider')->nullable()->after(config('socials.user.table_after'));
                 $table->string('provider_id')->nullable()->after('provider');
+                $table->tinyInteger(config('socials.user.update_colum'))->default(0);
+
             });
     
             $userAvatarField = config('socials.user.avatar');
@@ -37,6 +39,7 @@ return new class extends Migration
         Schema::table(config('socials.user.table'), function (Blueprint $table) {
             $table->dropColumn('provider');
             $table->dropColumn('provider_id');
+            $table->dropColumn(config('socials.user.update_colum'));
         });
 
         $userAvatarField = config('socials.user.avatar');

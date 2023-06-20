@@ -61,5 +61,25 @@ trait FunctionTrait
 
     }
 
+    private function updateUser($user, $socialUser) {
+
+        if(config('socials.user.auto_update')) {
+            
+            $update = config('socials.user.update_colum');
+            $name = config('socials.user.name_colum');
+            $img = config('socials.user.avatar');
+
+            if($user->$update == 1) {
+                $user->$name = $socialUser->getName() ?? $socialUser->getNickname();
+                $user->$img  = $socialUser->getAvatar();
+                $user->updated_at = \Carbon\Carbon::now();
+                $user->save();
+            } else {
+                $user->updated_at = \Carbon\Carbon::now();
+                $user->save();
+            }
+        }
+    }
+
 
 }

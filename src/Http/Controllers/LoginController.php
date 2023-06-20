@@ -58,8 +58,7 @@ class LoginController extends Controller
                     ->with('success', trans('social-auth::socials.register'));
         } else {
 
-            $user->updated_at = \Carbon\Carbon::now();
-            $user->save();
+            $this->updateUser($user, $socialUser);
 
             return redirect()
                     ->route(config('socials.redirect.auth'))
