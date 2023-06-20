@@ -13,25 +13,31 @@ trait GuardTrait
     private function checkSocialsIsActive($user = null)
     {
         $access = config('socials.access_admin');
-
+    
         if ($user && in_array($user->id, $access)) {
             return true;
-        } else {
-            if (!config('socials.isActive')) {
-                abort(403, trans('social-auth::socials.offline'));
-            }
+        }
+    
+        if (!config('socials.isActive')) {
+            abort(403, trans('social-auth::socials.offline'));
         }
     }
+       
 
 
     private function isAccess($email)
     {
         $user = User::where('email', $email)->first();
-
-        if ($user && $user->{config('socials.user.access_colum')} == config('socials.user.access_value')) {
+    
+        if (!$user) {
+            abort(403,  trans('social-auth::socials.not_user'));
+        }
+    
+        if ($user->{config('socials.user.access_colum')} == config('socials.user.access_value')) {
             abort(403,  trans('social-auth::socials.ban'));
         }
     }
+    
 
 
     private function checkProvider($user, $provider)
