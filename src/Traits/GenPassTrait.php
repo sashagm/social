@@ -205,16 +205,15 @@ trait GenPassTrait
         return $pass;
     }
 
+
     private function generateString($filter)
     {
-
         if (config('socials.genPass.default_gen')) {
 
             return config('socials.genPass.default_pass');
+
         } else {
-
             switch ($filter) {
-
                 case 'string':
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                     break;
@@ -260,24 +259,32 @@ trait GenPassTrait
                     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
                     break;
             }
-
+    
             $minLength = config('socials.genPass.min');
             $maxLength = config('socials.genPass.max');
             $stableLength = config('socials.genPass.stable_length');
-
-
+    
             if ($stableLength) {
                 $length = config('socials.genPass.length');
             } else {
                 $length = rand($minLength, $maxLength);
             }
-
-
-            $string = '';
-            for ($i = 0; $i < $length; $i++) {
-                $string .= $characters[rand(0, strlen($characters) - 1)];
+    
+            $strings = [];
+            for ($i = 0; $i < config('socials.genPass.generation_stages'); $i++) {
+                $string = '';
+                for ($j = 0; $j < $length; $j++) {
+                    $string .= $characters[rand(0, strlen($characters) - 1)];
+                }
+                $strings[] = $string;
             }
-            return $string;
+
+    
+            return $strings[array_rand($strings)];
         }
     }
+
+
+
+
 }
