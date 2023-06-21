@@ -102,18 +102,37 @@ trait FunctionTrait
 
     private function blade()
     {
-        Blade::directive('socials', function () {
+        Blade::directive('socials', function ($expression) {
+            $class = '';
+            $style = '';
+            $params = explode(',', $expression);
+            $routes = config('socials.routes');
+        
+            if (count($params) > 0) {
+                foreach ($params as $param) {
+                    if (stristr($param, 'class')) {
+                        $class = str_replace('class=', '', $param);
+                    }
+        
+                    if (stristr($param, 'style')) {
+                        $style = str_replace('style=', '', $param);
+                    }
+                }
+            }
+        
             if (config('socials.isActive')) {
                 $providers = config('socials.providers');
-    
-                $routes = config('socials.routes');
-    
-                $html = '';
-    
-                foreach ($providers as $provider) {
-                    $html .= '<a href="' . route($routes['auth_login'][1], $provider) . '">' . trans('social-auth::socials.link_auth') . ucfirst($provider) . '</a>&nbsp;';
+
+                if (!config('providers')) {
+                    throw new Exception("Social auth configuration error: providers not set!");
                 }
-    
+        
+                $html = '';
+        
+                foreach ($providers as $provider) {
+                    $html .= '<a href="' . route($routes['auth_login'][1], $provider) . '" class=' . $class . ' style=' . $style . '>' . trans('social-auth::socials.link_auth') .  ucfirst($provider) . '</a>&nbsp;';
+                }
+        
                 return $html;
             } else {
                 return '<h3>' . trans('social-auth::socials.offline') . '</h3>';

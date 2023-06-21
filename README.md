@@ -255,7 +255,14 @@
 
 ```
 
+Так же можно передавать свои классы и стили для ссылок `@socials(class="btn btn-primary", style="font-size: 16px; color: #ff2d20")`
 
+```php
+<body>
+        @socials(class="btn btn-primary", style="font-size: 16px; color: #ff2d20")
+</body>
+
+```
 
 ##### Кастомные поля
 
