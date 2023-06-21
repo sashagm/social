@@ -4,15 +4,17 @@ namespace Sashagm\Social\Providers;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
 use Sashagm\Social\Console\Commands\CreateCommand;
-
+use Sashagm\Social\Traits\FunctionTrait;
 
 class SocialServiceProvider extends ServiceProvider
 {
 
+    use FunctionTrait;
 
     /**
      * Register services.
@@ -47,6 +49,8 @@ class SocialServiceProvider extends ServiceProvider
                 CreateCommand::class,
             ]);
         }
+
+        $this->blade();
 
 
 

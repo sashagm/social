@@ -5,6 +5,7 @@ namespace  Sashagm\Social\Traits;
 
 use Exception;
 use App\Models\User;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait FunctionTrait
@@ -98,7 +99,31 @@ trait FunctionTrait
         }
     }
 
+
+    private function blade()
+    {
+        Blade::directive('socials', function () {
+            if (config('socials.isActive')) {
+                $providers = config('socials.providers');
     
+                $routes = config('socials.routes');
+    
+                $html = '';
+    
+                foreach ($providers as $provider) {
+                    $html .= '<a href="' . route($routes['auth_login'][1], $provider) . '">' . trans('social-auth::socials.link_auth') . ucfirst($provider) . '</a>&nbsp;';
+                }
+    
+                return $html;
+            } else {
+                return '<h3>' . trans('social-auth::socials.offline') . '</h3>';
+            }
+        });
+
+
+    }
+
+
 
 
 }
