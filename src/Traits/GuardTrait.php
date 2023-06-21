@@ -27,6 +27,10 @@ trait GuardTrait
 
     private function isAccess($email)
     {
+        if (!config('socials.user.access_colum') || !config('socials.user.access_value')) {
+            abort(500, 'Social auth configuration error: access_colum or access_value not set');
+        }
+
         $user = User::where('email', $email)->first();
     
         if (!$user) {
@@ -42,6 +46,14 @@ trait GuardTrait
 
     private function checkProvider($user, $provider)
     {
+        if (!$user) {
+            throw new \InvalidArgumentException('User not found!');
+        }
+
+        if (!config('socials.isProvider')) {
+            throw new \InvalidArgumentException('Provider not found!');
+        }
+        
         $guard = config('socials.isProvider');
 
         switch ($guard) {
