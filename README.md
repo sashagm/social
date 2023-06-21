@@ -107,7 +107,6 @@
         ]
     ],
 
-
     'custom_fields'             => [
         /*
         'phone'                 => '+1234567890',
@@ -128,13 +127,6 @@
              'method' => 'one',
              'params' => []
          ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
-         
          */
      ],  
      
@@ -146,13 +138,6 @@
              'method' => 'one',
              'params' => []
          ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
-         
          */
      ],
 
@@ -163,15 +148,13 @@
              'method' => 'one',
              'params' => []
          ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
-         
          */
      ], 
+
+    'providers'                            => [
+       /* 'vkontakte', 'github',
+        */
+     ],
 
 ```
 
@@ -338,12 +321,6 @@
              'method' => 'one',
              'params' => []
          ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
          
          */
      ],  
@@ -356,12 +333,6 @@
              'method' => 'one',
              'params' => []
          ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
          
          */
      ],  
@@ -372,12 +343,6 @@
              'class' => 'App\Services\Testing',
              'method' => 'one',
              'params' => []
-         ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
          ],
          
          */
