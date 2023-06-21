@@ -123,7 +123,7 @@ trait FunctionTrait
             if (config('socials.isActive')) {
                 $providers = config('socials.providers');
 
-                if (!config('providers')) {
+                if (!config('socials.providers')) {
                     throw new Exception("Social auth configuration error: providers not set!");
                 }
         
