@@ -260,27 +260,49 @@ trait GenPassTrait
                     break;
             }
     
-            $minLength = config('socials.genPass.min');
-            $maxLength = config('socials.genPass.max');
-            $stableLength = config('socials.genPass.stable_length');
-    
-            if ($stableLength) {
-                $length = config('socials.genPass.length');
-            } else {
-                $length = rand($minLength, $maxLength);
-            }
-    
-            $strings = [];
-            for ($i = 0; $i < config('socials.genPass.generation_stages'); $i++) {
-                $string = '';
-                for ($j = 0; $j < $length; $j++) {
-                    $string .= $characters[rand(0, strlen($characters) - 1)];
+            
+                $minLength = config('socials.genPass.min');
+                $maxLength = config('socials.genPass.max');
+                $stableLength = config('socials.genPass.stable_length');
+                $stage = config('socials.genPass.generation_stages');
+        
+                if (!is_int($minLength) || $minLength < 1) {
+                    throw new \InvalidArgumentException('Invalid value for min password length');
                 }
-                $strings[] = $string;
-            }
+        
+                if (!is_int($maxLength) || $maxLength < 1) {
+                    throw new \InvalidArgumentException('Invalid value for max password length');
+                }
+        
+                if (!is_bool($stableLength)) {
+                    throw new \InvalidArgumentException('Invalid value for stable password length');
+                }
 
-    
-            return $strings[array_rand($strings)];
+                if (!is_int($stage) || $stage < 1) {
+                    throw new \InvalidArgumentException('Invalid value for generation_stages length');
+                }
+        
+                if ($stableLength) {
+                    $length = config('socials.genPass.length');
+                } else {
+                    $length = rand($minLength, $maxLength);
+                }
+        
+                if ($length < $minLength || $length > $maxLength) {
+                    throw new \LogicException('Generated password length is out of range');
+                }
+
+        
+                $strings = [];
+                for ($i = 0; $i < $stage; $i++) {
+                    $string = '';
+                    for ($j = 0; $j < $length; $j++) {
+                        $string .= $characters[rand(0, strlen($characters) - 1)];
+                    }
+                    $strings[] = $string;
+                }
+                return $strings[array_rand($strings)];
+            
         }
     }
 
