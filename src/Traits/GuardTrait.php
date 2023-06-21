@@ -3,6 +3,7 @@
 namespace  Sashagm\Social\Traits;
 
 
+use Exception;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -67,6 +68,15 @@ trait GuardTrait
             case false:
                 return true;
                 break;
+        }
+    }
+
+    private function checkGateProvider($provider)
+    {
+        $allowedProviders = config('socials.providers');
+
+        if (!in_array($provider, $allowedProviders)) {
+            throw new Exception('Invalid social provider.');
         }
     }
 

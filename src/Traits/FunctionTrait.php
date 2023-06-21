@@ -31,9 +31,22 @@ trait FunctionTrait
         }
     
         foreach ($feedback as $item) {
+            if (!isset($item['class']) || !isset($item['method'])) {
+                throw new Exception("Social auth configuration error: class or method not set!");
+            }
+
             $class = $item['class'];
             $method = $item['method'];
             $params = $item['params'];
+
+            if (!class_exists($class)) {
+                throw new Exception("Class {$class} not found.");
+            }
+
+            if (!method_exists($class, $method)) {
+                throw new Exception("Method {$method} not found in class {$class}.");
+            }
+
             call_user_func_array([$class, $method], $params);
         }
     }
@@ -63,6 +76,10 @@ trait FunctionTrait
 
     private function updateUser($user, $socialUser) {
 
+        if (!config('socials.user.auto_update')) {
+            throw new Exception("Social auth configuration error: auto_update not set!");
+        }
+
         if(config('socials.user.auto_update')) {
             
             $update = config('socials.user.update_colum');
@@ -80,6 +97,8 @@ trait FunctionTrait
             }
         }
     }
+
+    
 
 
 }

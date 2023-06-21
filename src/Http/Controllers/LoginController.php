@@ -18,13 +18,16 @@ class LoginController extends Controller
 
     public function redirectToProvider($provider)
     {
+        $this->checkGateProvider($provider);
+
         return Socialite::driver($provider)->redirect();
     }
 
 
     public function handleProviderCallback($provider)
     {
-
+        $this->checkGateProvider($provider);
+        
         $socialUser = Socialite::driver($provider)->user();
 
         $user = User::where(config('socials.user.email_colum'), $socialUser->getEmail())->first();
