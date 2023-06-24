@@ -161,6 +161,36 @@ trait GenPassTrait
                 break;
 
 
+            case 'murmur3a':
+                $pass = hash("murmur3a", $this->generateString($filter));
+                break;
+
+            case 'murmur3c':
+                $pass = hash("murmur3c", $this->generateString($filter));
+                break;
+
+            case 'murmur3f':
+                $pass = hash("murmur3f", $this->generateString($filter));
+                break;
+
+            case 'xxh32':
+                $pass = hash("xxh32", $this->generateString($filter));
+                break;
+
+            case 'xxh64':
+                $pass = hash("xxh64", $this->generateString($filter));
+                break;
+
+            case 'xxh3':
+                $pass = hash("xxh3", $this->generateString($filter));
+                break;
+
+            case 'xxh128':
+                $pass = hash("xxh128", $this->generateString($filter));
+                break;
+
+
+
             case 'password_hash':
                 $pass = password_hash($this->generateString($filter), PASSWORD_DEFAULT);
                 break;
@@ -211,7 +241,6 @@ trait GenPassTrait
         if (config('socials.genPass.default_gen')) {
 
             return config('socials.genPass.default_pass');
-
         } else {
             switch ($filter) {
                 case 'string':

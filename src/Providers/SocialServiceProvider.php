@@ -6,15 +6,16 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
+use Sashagm\Social\Traits\BladeTrait;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
 use Sashagm\Social\Console\Commands\CreateCommand;
-use Sashagm\Social\Traits\FunctionTrait;
+
 
 class SocialServiceProvider extends ServiceProvider
 {
 
-    use FunctionTrait;
+    use BladeTrait;
 
     /**
      * Register services.
@@ -51,7 +52,7 @@ class SocialServiceProvider extends ServiceProvider
         }
 
         $this->blade();
-
+        $this->blade_btn();
 
 
     }

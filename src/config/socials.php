@@ -124,11 +124,12 @@ return [
          */
      ],  
      
-     'providers'                            => [
+     'providers' => [
 
+        'vkontakte',
+        'github' ,
 
-        
-     ],
+    ],
     
 
 ];

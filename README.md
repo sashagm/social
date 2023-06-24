@@ -205,6 +205,8 @@
 - `crc32` `crc32b` `crc32c`
 - `fnv132` `fnv1a32` `fnv164` `fnv1a64`
 - `joaat`
+- `murmur3a` `murmur3c` `murmur3f`
+- `xxh32` `xxh64` `xxh3` `xxh128`
 - `pbkdf2`
 - `base64`
 
