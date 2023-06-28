@@ -14,6 +14,11 @@ trait FunctionTrait
 
     private function feedback($method)
     {
+
+        if (!$method) {
+            throw new \InvalidArgumentException('Feedback method not specified!');
+        }
+
         switch ($method) {
             case 'before':
                 $feedback = config('socials.feedback_before');
@@ -56,6 +61,14 @@ trait FunctionTrait
     private function cast_fields($socialUser, $provider)
     {
 
+        if (!$socialUser) {
+            throw new \InvalidArgumentException('Social user not specified!');
+        }
+    
+        if (!$provider) {
+            throw new \InvalidArgumentException('Provider not specified!');
+        }
+
         $userData = [
             config('socials.user.name_colum') => $socialUser->getName() ?? $socialUser->getNickname(),
             config('socials.user.email_colum') => $socialUser->getEmail(),
@@ -79,6 +92,14 @@ trait FunctionTrait
 
         if (!config('socials.user.auto_update')) {
             throw new Exception("Social auth configuration error: auto_update not set!");
+        }
+
+        if (!$user) {
+            throw new \InvalidArgumentException('User not specified!');
+        }
+    
+        if (!$socialUser) {
+            throw new \InvalidArgumentException('Social user not specified!');
         }
 
         if(config('socials.user.auto_update')) {

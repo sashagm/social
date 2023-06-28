@@ -50,13 +50,17 @@ trait GuardTrait
         if (!$user) {
             throw new \InvalidArgumentException('User not found!');
         }
-
+    
+        if (!$provider) {
+            throw new \InvalidArgumentException('Provider not specified!');
+        }
+    
         if (!config('socials.isProvider')) {
             throw new \InvalidArgumentException('Provider not found!');
         }
         
         $guard = config('socials.isProvider');
-
+    
         switch ($guard) {
             case true:
                 if ($user->provider == $provider) {
@@ -70,10 +74,19 @@ trait GuardTrait
                 break;
         }
     }
+    
 
     private function checkGateProvider($provider)
     {
         $allowedProviders = config('socials.providers');
+
+        if (!$allowedProviders) {
+            throw new \InvalidArgumentException('Provider not found to array providers!');
+        }
+
+        if (!$provider) {
+            throw new \InvalidArgumentException('Provider not found!');
+        }
 
         if (!in_array($provider, $allowedProviders)) {
             throw new Exception('Invalid social provider.');
