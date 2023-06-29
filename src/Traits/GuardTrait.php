@@ -29,7 +29,7 @@ trait GuardTrait
     private function isAccess($email)
     {
         if (!config('socials.user.access_colum') || !config('socials.user.access_value')) {
-            abort(500, 'Social auth configuration error: access_colum or access_value not set');
+            throw new \InvalidArgumentException('Social auth configuration error: access_colum or access_value not set');
         }
 
         $user = User::where('email', $email)->first();
