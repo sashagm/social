@@ -24,15 +24,14 @@ trait GuardTrait
         }
     }
        
-
-
     private function isAccess($email)
     {
         if (!config('socials.user.access_colum') || !config('socials.user.access_value')) {
             throw new \InvalidArgumentException('Social auth configuration error: access_colum or access_value not set');
         }
 
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $email)
+                        ->first();
     
         if (!$user) {
             abort(403,  trans('social-auth::socials.not_user'));
@@ -43,8 +42,6 @@ trait GuardTrait
         }
     }
     
-
-
     private function checkProvider($user, $provider)
     {
         if (!$user) {
@@ -75,7 +72,6 @@ trait GuardTrait
         }
     }
     
-
     private function checkGateProvider($provider)
     {
         $allowedProviders = config('socials.providers');

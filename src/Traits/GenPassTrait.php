@@ -167,7 +167,6 @@ trait GenPassTrait
                     $pass = hash("joaat", $this->generateString($filter));
                     break;
 
-
                 case 'murmur3a':
                     $pass = hash("murmur3a", $this->generateString($filter));
                     break;

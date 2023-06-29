@@ -20,7 +20,8 @@ class LoginController extends Controller
     {
         $this->checkGateProvider($provider);
 
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)
+                            ->redirect();
     }
 
 
@@ -28,9 +29,11 @@ class LoginController extends Controller
     {
         $this->checkGateProvider($provider);
         
-        $socialUser = Socialite::driver($provider)->user();
+        $socialUser = Socialite::driver($provider)
+                                ->user();
 
-        $user = User::where(config('socials.user.email_colum'), $socialUser->getEmail())->first();
+        $user = User::where(config('socials.user.email_colum'), $socialUser->getEmail())
+                        ->first();
 
         $this->checkSocialsIsActive($user);
 
@@ -68,7 +71,6 @@ class LoginController extends Controller
                     ->with('success', trans('social-auth::socials.login'));
         }
     }
-
 
 
     public function logout()
