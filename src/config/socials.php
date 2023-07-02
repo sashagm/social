@@ -17,6 +17,8 @@ return [
         'email_colum'           => 'email', // Поле для почты
         'auto_update'           =>  true,   // Разрешить пользователям обновлять данные от провайдеров
         'update_colum'          =>  'isUpdate', // Поле для обновлений данных
+        'getAvatar'             => true, // Использовать аватарку пользователя из провайдера социальной сети
+        'defaultAvatar'         => '/path/to/default/avatar.png', // Путь к дефолтной аватарке
 
     ],
 

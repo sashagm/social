@@ -73,7 +73,7 @@ trait FunctionTrait
             config('socials.user.name_colum') => $socialUser->getName() ?? $socialUser->getNickname(),
             config('socials.user.email_colum') => $socialUser->getEmail(),
             config('socials.user.pass_colum') => $this->generatePass(),
-            config('socials.user.avatar') => $socialUser->getAvatar(),
+            config('socials.user.avatar') => $this->getAvatar($socialUser),
             'provider' => $provider,
             'provider_id' => $socialUser->getId(),
         ];
@@ -123,7 +123,14 @@ trait FunctionTrait
         }
     }
 
-
+    private function getAvatar($socialUser)
+    {
+        if (config('socials.user.getAvatar')) {
+            return $socialUser->getAvatar();
+        } else {
+            return config('socials.user.defaultAvatar');
+        }
+    }
 
 
 
