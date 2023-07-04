@@ -2,15 +2,10 @@
 
 namespace  Sashagm\Social\Traits;
 
-
 use Exception;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait GenPassTrait
 {
-
-
 
     private function generatePass()
     {
@@ -22,7 +17,6 @@ trait GenPassTrait
             if (!$method || !$filter || !$secret) {
                 throw new Exception("Отсутствуют значения конфигурации для генерации пароля.");
             }
-
 
             switch ($method) {
 
@@ -133,7 +127,6 @@ trait GenPassTrait
                 case 'gost-crypto':
                     $pass = hash("gost-crypto", $this->generateString($filter));
                     break;
-
 
                 case 'adler32':
                     $pass = hash("adler32", $this->generateString($filter));
@@ -248,7 +241,6 @@ trait GenPassTrait
         if (config('socials.genPass.default_gen')) {
 
             return config('socials.genPass.default_pass');
-
         } else {
             switch ($filter) {
                 case 'string':
@@ -352,4 +344,5 @@ trait GenPassTrait
 
         return $strings[array_rand($strings)];
     }
+
 }

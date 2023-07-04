@@ -6,10 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Sashagm\Social\Traits\GuardTrait;
 use Sashagm\Social\Traits\GenPassTrait;
 use Laravel\Socialite\Facades\Socialite;
 use Sashagm\Social\Traits\FunctionTrait;
-use Sashagm\Social\Traits\GuardTrait;
 
 class LoginController extends Controller
 {
@@ -21,19 +21,19 @@ class LoginController extends Controller
         $this->checkGateProvider($provider);
 
         return Socialite::driver($provider)
-                            ->redirect();
+            ->redirect();
     }
 
 
     public function handleProviderCallback($provider)
     {
         $this->checkGateProvider($provider);
-        
+
         $socialUser = Socialite::driver($provider)
-                                ->user();
+                         ->user();
 
         $user = User::where(config('socials.user.email_colum'), $socialUser->getEmail())
-                        ->first();
+                    ->first();
 
         $this->checkSocialsIsActive($user);
 
@@ -81,10 +81,6 @@ class LoginController extends Controller
                 ->route(config('socials.redirect.logout'))
                 ->with('success', trans('social-auth::socials.logout'));
     }
-
-
-  
-
 
 
 }

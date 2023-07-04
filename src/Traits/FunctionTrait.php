@@ -2,11 +2,8 @@
 
 namespace  Sashagm\Social\Traits;
 
-
 use Exception;
-use App\Models\User;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Carbon\Carbon;
 
 trait FunctionTrait
 {
@@ -27,15 +24,15 @@ trait FunctionTrait
             case 'after':
                 $feedback = config('socials.feedback_after');
                 break;
-                
+
             case 'register':
-                    $feedback = config('socials.feedback_register');
-                    break;
+                $feedback = config('socials.feedback_register');
+                break;
 
             default:
                 throw new Exception('Invalid feedback method.');
         }
-    
+
         foreach ($feedback as $item) {
             if (!isset($item['class']) || !isset($item['method'])) {
                 throw new Exception("Social auth configuration error: class or method not set!");
@@ -64,7 +61,7 @@ trait FunctionTrait
         if (!$socialUser) {
             throw new \InvalidArgumentException('Social user not specified!');
         }
-    
+
         if (!$provider) {
             throw new \InvalidArgumentException('Provider not specified!');
         }
@@ -85,10 +82,10 @@ trait FunctionTrait
         }
 
         return $userData;
-
     }
 
-    private function updateUser($user, $socialUser) {
+    private function updateUser($user, $socialUser)
+    {
 
         if (!config('socials.user.auto_update')) {
             throw new Exception("Social auth configuration error: auto_update not set!");
@@ -97,28 +94,28 @@ trait FunctionTrait
         if (!$user) {
             throw new \InvalidArgumentException('User not specified!');
         }
-    
+
         if (!$socialUser) {
             throw new \InvalidArgumentException('Social user not specified!');
         }
 
-        if(config('socials.user.auto_update')) {
-            
+        if (config('socials.user.auto_update')) {
+
             $update = config('socials.user.update_colum');
             $name = config('socials.user.name_colum');
             $img = config('socials.user.avatar');
 
-            if($user->$update == 1) {
+            if ($user->$update == 1) {
                 $user->$name = $socialUser->getName() ?? $socialUser->getNickname();
                 $user->$img  = $socialUser->getAvatar();
-                $user->updated_at = \Carbon\Carbon::now();
+                $user->updated_at = Carbon::now();
                 $user->save();
             } else {
-                $user->updated_at = \Carbon\Carbon::now();
+                $user->updated_at = Carbon::now();
                 $user->save();
             }
         } else {
-            $user->updated_at = \Carbon\Carbon::now();
+            $user->updated_at = Carbon::now();
             $user->save();
         }
     }
@@ -131,7 +128,4 @@ trait FunctionTrait
             return config('socials.user.defaultAvatar');
         }
     }
-
-
-
 }

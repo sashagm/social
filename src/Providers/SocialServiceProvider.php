@@ -3,12 +3,8 @@
 namespace Sashagm\Social\Providers;
 
 use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Route;
 use Sashagm\Social\Traits\BladeTrait;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Socialite\Contracts\Factory;
 use Sashagm\Social\Console\Commands\CreateCommand;
 
 
@@ -30,19 +26,18 @@ class SocialServiceProvider extends ServiceProvider
      */
 
 
-     public function boot()
-     {
+    public function boot()
+    {
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/social.php');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'social-auth');
-
+        $this->loadRoutesFrom(__DIR__ . '/../routes/social.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'social-auth');
 
         $this->publishes([
-            __DIR__.'/../config/socials.php' => config_path('socials.php'),
+            __DIR__ . '/../config/socials.php' => config_path('socials.php'),
         ], 'social-auth');
         $this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/socials'),
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/socials'),
         ], 'social-auth');
 
         if ($this->app->runningInConsole()) {
@@ -53,14 +48,6 @@ class SocialServiceProvider extends ServiceProvider
 
         $this->blade();
         $this->blade_btn();
-
-
     }
 
-
-
-
-     
 }
-
-
