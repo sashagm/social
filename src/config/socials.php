@@ -1,10 +1,11 @@
 <?php
 
 return [
-    
+
     'admin_prefix'              => '', // Префикс для маршрутов
     'isActive'                  => true, // Доступ авторизации
     'isProvider'                => true,  // Проверка провайдера( запрет на использование одинаковых email)
+    'isLoginForm'               => true,  // Разрешать авторизовываться через обычную форму
 
     'user'                      => [
         'table'                 => 'users', // Таблица пользователей
@@ -19,6 +20,7 @@ return [
         'update_colum'          =>  'isUpdate', // Поле для обновлений данных
         'getAvatar'             => true, // Использовать аватарку пользователя из провайдера социальной сети
         'defaultAvatar'         => '/path/to/default/avatar.png', // Путь к дефолтной аватарке
+        'check_field'           => 'id', // Поле для проверки активности социальных сетей.
 
     ],
 
@@ -40,59 +42,48 @@ return [
 
     ],
 
-     'redirect'                 => [
+    'redirect'                  => [
         'auth'                  => 'home', // редирект после авторизации укажите именной роут
         'logout'                => 'home', // редирект после выхода укажите именной роут
 
-    ], 
+    ],
 
     'routes'                    => [
         'auth_login'            => [
-                                    '/login/{provider}', // url на вызов провайдера
-                                    'social-auth'        // route name 
+            '/login/{provider}', // url на вызов провайдера
+            'social-auth'        // route name 
         ],
         'auth_login_callback'   => [
-                                    '/login/{provider}/callback', // url на вызов коллбэк
-                                    'social-callback'             // route name
+            '/login/{provider}/callback', // url на вызов коллбэк
+            'social-callback'             // route name
         ],
         'social_logout'         => [
-                                    '/logout/social',           // url на вызов выход с аккаунта
-                                    'social-logout'             // route name
-        ]
+            '/logout/social',           // url на вызов выход с аккаунта
+            'social-logout'             // route name
+        ],
+        'auth_login_form'   => [
+            '/login', // url на вызов формы входа
+            'auth-login-form'             // route name
+        ],
+        'auth_login_form_callback'         => [
+            '/login/auth',           // url на вызов коллбэк form
+            'auth-login-form-callback'             // route name
+        ],
+
     ],
 
     'custom_fields'             => [
         /*
         'phone'                 => '+1234567890',
         'address'               => '123 Main Street',
-        */
-    ], 
+        */],
 
     'access_admin'              => [
         /*
         1,
-        */
-    ],
+        */],
 
-    'feedback_before'                  => [
-
-        /* [
-             'class' => 'App\Services\Testing',
-             'method' => 'one',
-             'params' => []
-         ],
- 
-         [
-             'class' => 'App\Services\Testing',
-             'method' => 'who',
-             'params' => ['test']
-         ],
-         
-         */
-     ],  
-     
-     
-     'feedback_after'                  => [
+    'feedback_before'           => [
 
         /* [
              'class' => 'App\Services\Testing',
@@ -106,10 +97,10 @@ return [
              'params' => ['test']
          ],
          
-         */
-     ],
+         */],
 
-     'feedback_register'                  => [
+
+    'feedback_after'             => [
 
         /* [
              'class' => 'App\Services\Testing',
@@ -123,16 +114,31 @@ return [
              'params' => ['test']
          ],
          
-         */
-     ],  
-     
-     'providers' => [
+         */],
+
+    'feedback_register'           => [
+
+        /* [
+             'class' => 'App\Services\Testing',
+             'method' => 'one',
+             'params' => []
+         ],
+ 
+         [
+             'class' => 'App\Services\Testing',
+             'method' => 'who',
+             'params' => ['test']
+         ],
+         
+         */],
+
+    'providers'                     => [
 
         'vkontakte',
-        'github' ,
+        'github',
 
     ],
-    
-    
+
+
 
 ];

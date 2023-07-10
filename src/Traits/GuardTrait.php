@@ -13,10 +13,12 @@ trait GuardTrait
     {
         $access = config('socials.access_admin');
 
-        if ($user && in_array($user->id, $access)) {
+        $checkField = config('socials.user.check_field');
+    
+        if ($user && in_array($user->$checkField, $access)) {
             return true;
         }
-
+    
         if (!config('socials.isActive')) {
             abort(403, trans('social-auth::socials.offline'));
         }
