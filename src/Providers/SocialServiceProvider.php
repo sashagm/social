@@ -29,25 +29,57 @@ class SocialServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/social.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'social-auth');
+        $this->registerRouter();
 
+        $this->registerMigrate();
+
+        $this->registerLang();
+
+        $this->publishFiles();
+
+        $this->registerCommands();
+
+        $this->loadBlade();
+    }
+
+    protected function registerMigrate()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+    }
+
+    protected function registerRouter()
+    {
+        $this->loadRoutesFrom(__DIR__ . '/../routes/social.php');
+    }
+
+    protected function registerLang()
+    {
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'social-auth');
+    }
+
+    protected function publishFiles()
+    {
         $this->publishes([
             __DIR__ . '/../config/socials.php' => config_path('socials.php'),
         ], 'social-auth');
         $this->publishes([
             __DIR__ . '/../resources/lang' => resource_path('lang/vendor/socials'),
         ], 'social-auth');
+    }
 
+    protected function registerCommands()
+    {
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateCommand::class,
             ]);
         }
-
-        $this->blade();
-        $this->blade_btn();
     }
 
+    protected function loadBlade()
+    {
+        $this->blade();
+
+        $this->blade_btn();
+    }
 }
