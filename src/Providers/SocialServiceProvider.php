@@ -6,6 +6,7 @@ use Exception;
 use Sashagm\Social\Traits\BladeTrait;
 use Illuminate\Support\ServiceProvider;
 use Sashagm\Social\Console\Commands\CreateCommand;
+use Sashagm\Social\Console\Commands\AccessSocialsCommand;
 
 
 class SocialServiceProvider extends ServiceProvider
@@ -72,6 +73,7 @@ class SocialServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateCommand::class,
+                AccessSocialsCommand::class,
             ]);
         }
     }
