@@ -58,10 +58,10 @@ class LoginController extends Controller
 
         Auth::login($user);
 
+        $name =  config('socials.user.name_colum');
+
         if ($new) {
             
-            $name =  config('socials.user.name_colum');
-
             if (config('socials.logger.log_login')) { 
 
                 $this->logger('info', "The user: {$user->$name} has successfully registered in: {$_SERVER['REMOTE_ADDR']}"); 
@@ -73,6 +73,11 @@ class LoginController extends Controller
         } else {
 
             $this->updateUser($user, $socialUser);
+
+            if (config('socials.logger.log_login')) { 
+
+                $this->logger('info', "The user: {$user->$name} has successfully logged in: {$_SERVER['REMOTE_ADDR']}"); 
+            }
 
             return redirect()
                     ->route(config('socials.redirect.auth'))
