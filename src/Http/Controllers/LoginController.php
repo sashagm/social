@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Sashagm\Social\Traits\GuardTrait;
 use Sashagm\Social\Traits\GenPassTrait;
 use Laravel\Socialite\Facades\Socialite;
+use Sashagm\Social\Traits\BuildsLoggers;
 use Sashagm\Social\Traits\FunctionTrait;
 
 class LoginController extends Controller
 {
-    use GenPassTrait, GuardTrait, FunctionTrait;
+    use GenPassTrait, GuardTrait, FunctionTrait, BuildsLoggers;
 
 
     public function redirectToProvider($provider)
@@ -58,6 +59,13 @@ class LoginController extends Controller
         Auth::login($user);
 
         if ($new) {
+            
+            $name =  config('socials.user.name_colum');
+
+            if (config('socials.logger.log_login')) { 
+
+                $this->logger('info', "The user: {$user->$name} has successfully registered in: {$_SERVER['REMOTE_ADDR']}"); 
+            }
 
             return redirect()
                     ->route(config('socials.redirect.auth'))

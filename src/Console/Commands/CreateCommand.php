@@ -20,7 +20,7 @@ class CreateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Данная команда создаст необходимые файлы.';
+    protected $description = 'Данная команда создаст необходимые файлы для пакета socials';
 
     /**
      * Execute the console command.

@@ -75,6 +75,11 @@ class SocialServiceProvider extends ServiceProvider
                 CreateCommand::class,
                 AccessSocialsCommand::class,
             ]);
+        } else {
+            $this->commands([
+                CreateCommand::class,
+                AccessSocialsCommand::class,
+            ]);
         }
     }
 

@@ -10,12 +10,16 @@ use Illuminate\Support\Facades\Auth;
 trait AuthTrait
 {
 
+    use BuildsLoggers;
+
     public function authenticateUser($user, $password)
     {
 
         $pass = config('socials.user.pass_colum');
         
         $em = config('socials.user.email_colum');
+
+        $name =  config('socials.user.name_colum');
 
         $storedPassword = $user->$pass;
 
@@ -28,6 +32,11 @@ trait AuthTrait
             $this->isAccess($user->$em);
 
             Auth::login($user);
+
+            if (config('socials.logger.log_login')) { 
+
+                $this->logger('info', "The user: {$user->$name} has successfully logged in: {$_SERVER['REMOTE_ADDR']}"); 
+            }
 
             return true;
             
