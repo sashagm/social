@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Sashagm\Social\Http\Controllers\AuthController;
 use Sashagm\Social\Http\Controllers\LoginController;
 
-$routes = config('socials.routes');
+$routes = config('socials.routes', []);  
 
 Route::group(['middleware' => ['web', 'guest'], 'prefix' => config('socials.admin_prefix')], function () use ($routes) {
 
