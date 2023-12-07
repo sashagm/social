@@ -29,14 +29,13 @@ class SocialServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->publishFiles();
 
         $this->registerRouter();
 
         $this->registerMigrate();
 
         $this->registerLang();
-
-        $this->publishFiles();
 
         $this->registerCommands();
 
