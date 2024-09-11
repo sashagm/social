@@ -20,6 +20,8 @@ class SocialServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+
+        $this->publishFiles();
     }
 
     /**
@@ -29,7 +31,6 @@ class SocialServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishFiles();
 
         $this->registerRouter();
 
