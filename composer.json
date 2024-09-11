@@ -12,7 +12,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "laravel/framework": "^10.0",
         "guzzlehttp/guzzle": "^7.7",
         "laravel/socialite": "^5.8"
     },
